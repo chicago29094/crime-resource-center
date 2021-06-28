@@ -7,9 +7,11 @@ export default function Header(props) {
     
     return (
         <Container>
-            <Row>
+            <Row className="align-items-center">
                 <Image src={crcLogo} alt="OFCRC Logo" className="header-logo" />
                 <h1>Online Federal Crime Resource Center</h1>
+            </Row>
+            <Row className="justify-content-end">
                 <Navigation />
             </Row>
         </Container>

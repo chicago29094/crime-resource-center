@@ -1,4 +1,5 @@
 import { Route } from 'react-router-dom'
+import { Container, Col, Row } from 'react-bootstrap'
 import About from "../About/About"
 import Contribute from "../Contribute/Contribute"
 import Hero from "../Hero/Hero"
@@ -15,13 +16,29 @@ export default function MainContent(props) {
             <Route path="/contribute" exact component={Contribute} />
 
             <Route path="/crimes" exact>
-                <CrimesSearchForm />
-                <SearchResults />
+                <Container>
+                    <Row>
+                        <Col>
+                            <CrimesSearchForm />
+                        </Col>
+                        <Col>
+                            <SearchResults />
+                        </Col>
+                    </Row>
+                </Container>
             </Route>
                 
             <Route path="/arrests" exact>
-                <ArrestsSearchForm />
-                <SearchResults />
+                <Container>
+                    <Row>
+                        <Col>
+                            <ArrestsSearchForm />
+                        </Col>
+                        <Col>
+                            <SearchResults />
+                        </Col>
+                    </Row>
+                </Container>
             </Route>
 
         </main>
