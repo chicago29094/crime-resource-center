@@ -13,3 +13,16 @@ h1 {
 img.header-logo {
     max-height:125px;
 }
+
+.crc-footer {
+    margin: 40px 0px 40px 0px;
+    padding: 40px 0px 40px 0px;
+    background: #000000;
+    color: #ffffff;
+    width: 100%;
+}
+
+.crc-footer h3 {
+    width: 200px;
+    margin: 0px auto 30px auto;
+}

@@ -25,7 +25,7 @@ export default function SearchResults(props) {
 
     return (
         <div>
-            <h1>Search Results</h1>
+            <h2>Search Results</h2>
         </div>
     )
 

@@ -16,7 +16,7 @@ export default function MainContent(props) {
             <Route path="/contribute" exact component={Contribute} />
 
             <Route path="/crimes" exact>
-                <Container>
+                <Container fluid>
                     <Row>
                         <Col>
                             <CrimesSearchForm />
@@ -29,7 +29,7 @@ export default function MainContent(props) {
             </Route>
                 
             <Route path="/arrests" exact>
-                <Container>
+                <Container fluid>
                     <Row>
                         <Col>
                             <ArrestsSearchForm />

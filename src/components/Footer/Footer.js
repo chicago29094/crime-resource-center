@@ -3,19 +3,43 @@ export default function Footer(props) {
 
     return (
        
-            <Container>
-                <h1>Footer</h1>
+            <Container className="crc-footer mr-0 ml-0" fluid>
             
-                <Row>
-                    <Col>
-                        <h3>About</h3>
+                <h3>Footer</h3>
+
+                <Row className="justify-content-md-center">
+
+                    <Col xs="3">
+                        <h4>About</h4>
+                        <ul>
+                            <li>Pellentesque porttitor</li>
+                            <li>Velit lacinia egestas auctor</li>
+                            <li>Diam eros tempus arcu</li>
+                            <li>Nec vulputate augue</li>
+                        </ul>
+
                     </Col>
-                    <Col>
-                        <h3>Resources</h3>
+
+                    <Col xs="3">
+                        <h4>Resources</h4>
+                        <ul>
+                            <li>Pellentesque porttitor</li>
+                            <li>Velit lacinia egestas auctor</li>
+                            <li>Diam eros tempus arcu</li>
+                            <li>Nec vulputate augue</li>
+                        </ul>
                     </Col>
-                    <Col>
-                        <h3>Contact</h3>
+                    
+                    <Col xs="3">
+                        <h4>Contact</h4>
+                        <ul>
+                            <li>Pellentesque porttitor</li>
+                            <li>Velit lacinia egestas auctor</li>
+                            <li>Diam eros tempus arcu</li>
+                            <li>Nec vulputate augue</li>
+                        </ul>
                     </Col>
+
                 </Row>
             </Container>
 
