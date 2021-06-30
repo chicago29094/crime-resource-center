@@ -6,9 +6,6 @@ import Footer from '../Footer/Footer';
 
 export default function MainContainer(props) {
 
-const [apiKey, setApiKey] = useState(process.env.REACT_APP_FBI_API_KEY);
-const [states, setStates] = useState([]);
-
     return (
         <Container fluid>
             <Row>
@@ -18,7 +15,7 @@ const [states, setStates] = useState([]);
             </Row>
             <Row>
                 <Col>
-                    <MainContent apiKey={apiKey} states={states} setStates={setStates} />
+                    <MainContent />
                 </Col>
             </Row>
             <Row>

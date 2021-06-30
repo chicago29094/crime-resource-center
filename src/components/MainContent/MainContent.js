@@ -1,5 +1,5 @@
 import { Route } from "react-router-dom"
-import { useEffect } from "react"
+import { useState, useEffect } from "react"
 import { Container, Col, Row } from "react-bootstrap"
 import About from "../About/About"
 import Contribute from "../Contribute/Contribute"
@@ -15,11 +15,11 @@ export default function MainContent(props) {
     // console.log("Here2:", fbiControllers["arrest-data"]["detailedOffense"]);
     // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
     
-    console.log("Main Content is Reloading", Date.now(), `props.states=[${props.states}]` );
+    const [apiKey, setApiKey] = useState(process.env.REACT_APP_FBI_API_KEY);
+    const [states, setStates] = useState([]);
 
-    const fetchStateList = async (page, fetchAction) => {
-        console.log(`page=[${page}], fetchAction=[${fetchAction}]`);
-        const apiURL = generateAPIURL("", "", "", "", "", "", props.apiKey, fbiControllers["lookups"]["stateAPI"], page );
+    const fetchStateList = async (pstates, page, fetchAction) => {
+        const apiURL = generateAPIURL("", "", "", "", "", "", apiKey, fbiControllers["lookups"]["stateAPI"], page );
         console.log("apiURL=", apiURL);
         try { 
             // fetch
@@ -32,42 +32,26 @@ export default function MainContent(props) {
 
             const data = await response.json();
 
-            console.log("Here:0007", data, data.results, data.results.length);
             if ( (data) && (data.results) && (data.results.length>0) ) {
-                console.log("Here:00008");
                 if (fetchAction==="replace") {
-                    console.log("Here:00008.5");
-                    props.setStates([]);
+                    setStates([]);
                 }
 
-                console.log("Here:00009");
-                let localStates=[...props.states];
-                console.log("Here:00009.1", localStates);
+                let localStates=[...pstates];
                 for (let i=0; i<data.results.length; i++) {
-                    console.log("Here:00009.5");
                     const stateObj={};
                     stateObj[data.results[i].state_abbr]=data.results[i].state_name;
                     localStates.push(stateObj);
                 }
-                console.log("Here:00009.6", localStates);
-                console.log("Here:00009.65", [...localStates]);
-                props.setStates( [...localStates] );
-                console.log("Here:00009.7", props.states);
-
-                console.log("Here:00010");
-                console.log(data.pagination, data.pagination.page, data.pagination.pages);
+                setStates( localStates );
 
                 if ( (data.pagination) && (data.pagination.page>=0) && (data.pagination.pages>=1) ) {
-                    console.log("Here:00011");
                     const currentPage=parseInt(data.pagination.page);
                     const totalPages=parseInt(data.pagination.pages);
-                    console.log(`Here:00012: currentPage=[${currentPage}] totalPages=[${totalPages}]`);
 
                     if (totalPages>0) {
-                        console.log("Here:00013");
                         if (currentPage<(totalPages-1)) {
-                            console.log("Here:00013.5");
-                            fetchStateList(currentPage+1, "append");
+                            fetchStateList(localStates, currentPage+1, "append");
                         }
                     }
                 }
@@ -80,12 +64,9 @@ export default function MainContent(props) {
 
 
     useEffect( () => {
-                console.log("Bang!!!!");
-                fetchStateList("", "replace");
+                fetchStateList(states, "", "replace");
     }, []);
 
-
-    console.log("States Now:", props.states);
 
     return (
 
@@ -98,10 +79,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row className="justify-content-between">
                         <Col xs="4" className="px-5">
-                            <CrimesSearchForm  apiKey={props.apiKey} states={props.states} />
+                            <CrimesSearchForm  apiKey={apiKey} states={states} />
                         </Col>  
                         <Col xs="8">
-                            <SearchResults apiKey={props.apiKey} states={props.states} />
+                            <SearchResults apiKey={apiKey} states={states} />
                         </Col>
                     </Row>
                 </Container>
@@ -111,10 +92,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row>
                         <Col xs="4" className="px-5">
-                            <ArrestsSearchForm  apiKey={props.apiKey} states={props.states} />
+                            <ArrestsSearchForm  apiKey={apiKey} states={states} />
                         </Col>
                         <Col xs="8">
-                            <SearchResults  apiKey={props.apiKey} states={props.states} />
+                            <SearchResults  apiKey={apiKey} states={states} />
                         </Col>
                     </Row>
                 </Container>

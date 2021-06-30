@@ -1,12 +1,11 @@
 import { Container, Col, Row } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import { fbiControllers } from "../../fbiAPIEndpoints";
 
 
 export default function CrimesSearchForm(props) {
 
     return (
-        <div className="crime-search-form">
+        <>
             <h2>Crimes Search Form</h2>
 
             <Form>
@@ -16,16 +15,7 @@ export default function CrimesSearchForm(props) {
                     <Col sm="11">
                         <Form.Control as="select">
                         <option value="">Select...</option>
-                        {
-                            props.states.map( ( element, index) => {
-                                    const state = Object.entries(element);
-                                    const stateAbbr=state[0][0];
-                                    const stateName=state[0][1];
-                                    console.log(state, stateAbbr, stateName);
-                                    return <option key={index}keyid value={stateAbbr}>{stateName}</option>
-                                }
-                            )
-                        }
+                        <option value="IL">Illinois</option>
                         </Form.Control>
                     </Col>
                 </Form.Group>
@@ -44,8 +34,8 @@ export default function CrimesSearchForm(props) {
                                     yearsOptions.push(i);
                                 }
                                 return yearsOptions;
-                            })().map( (year, index) => 
-                                    <option key={year}keyid value={year}>{year}</option>
+                            })().map( (element, index) => 
+                                    <option key={index} value='{element}' ddd>{element}</option>
                                 )
                         }
                         </Form.Control>
@@ -55,34 +45,17 @@ export default function CrimesSearchForm(props) {
                         <Col>
                             <Form.Control as="select">
                             <option value="">Select...</option>
-                            { 
-                            (() => {
-                                const yearsOptions=[];
-                                for (let i=1990; i<=2019; i++) {
-                                    yearsOptions.push(i);
-                                }
-                                return yearsOptions;
-                            })().map( (year, index) => 
-                                    <option key={year}keyid value={year}>{year}</option>
-                                )
-                        }
+                            <option value="2021">2021</option>
                             </Form.Control>
                         </Col>
                     </Row>
                 </Form.Group>
     
                 <Form.Group controlId="crimeSearch">
-                    <Form.Label>Major Offense Type:</Form.Label>
+                    <Form.Label>Offense Type:</Form.Label>
                     <Form.Control as="select">
                     <option value="">Select...</option>
-                    {
-                        Object.entries(fbiControllers["offense-tkm"]["generalOffense"]).map(
-                            (key, index) => {
-                                console.log(`key=[${key}] index=${index}`)
-                                return <option key={key[0]}offid value={key[0]}>{key[1]}</option>
-                            }
-                        )   
-                    }
+                    <option value="Burglary">Burglary</option>
                     </Form.Control>
                 </Form.Group>
 
@@ -90,18 +63,17 @@ export default function CrimesSearchForm(props) {
                     <Form.Label className="mr-3">Output Format:</Form.Label>             
                     <Form.Check
                         inline
-                        label="Chart"
-                        name="outputFormat"
-                        type="radio"
-                        id={`chartoutput`}
-                        checked
-                    />
-                    <Form.Check
-                        inline
                         label="Text"
                         name="outputFormat"
                         type="radio"
                         id={`textoutput`}
+                    />
+                    <Form.Check
+                        inline
+                        label="Chart"
+                        name="outputFormat"
+                        type="radio"
+                        id={`chartoutput`}
                     />
                 </div>
 
@@ -113,7 +85,7 @@ export default function CrimesSearchForm(props) {
             </Form>
 
 
-        </div>
+        </>
     )
 
 }
