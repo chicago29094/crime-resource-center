@@ -15,7 +15,7 @@ export default function MainContent(props) {
     // console.log("Here2:", fbiControllers["arrest-data"]["detailedOffense"]);
     // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
     
-    console.log("Main Content is Reloading", Date.now(), props.states );
+    console.log("Main Content is Reloading", Date.now(), `props.states=[${props.states}]` );
 
     const fetchStateList = async (page, fetchAction) => {
         console.log(`page=[${page}], fetchAction=[${fetchAction}]`);
@@ -25,14 +25,14 @@ export default function MainContent(props) {
             // fetch
             const response = await fetch(apiURL);
 
-            if ( (!response.ok) || (response.status!='200') ) {
+            if ( (!response.ok) || (response.status!==200) ) {
                 const message = `An error occurred while retrieving the list of available U.S. States.  Please try again or contact the CRC administrator.`;
                 throw new Error(message);
             }
 
             const data = await response.json();
 
-            console.log(data, data.results, data.results.length);
+            console.log("Here:0007", data, data.results, data.results.length);
             if ( (data) && (data.results) && (data.results.length>0) ) {
                 console.log("Here:00008");
                 if (fetchAction==="replace") {
@@ -50,7 +50,7 @@ export default function MainContent(props) {
                     localStates.push(stateObj);
                 }
                 console.log("Here:00009.6", localStates);
-                console.log([...localStates]);
+                console.log("Here:00009.65", [...localStates]);
                 props.setStates( [...localStates] );
                 console.log("Here:00009.7", props.states);
 
