@@ -143,5 +143,47 @@ export const fbiControllers = {
                 },
 }
 
+export function generateAPIURL(stateAbbr, detailedOffense, generalOffense, offenderClass, since, until, apiKey, apiURL, page) {
 
+if ( (!apiURL) || (apiURL.length===0) ) {
+    return "";
+}
+
+let newURL=apiURL;
+
+if ( (stateAbbr) && (stateAbbr.length>0) ) {
+    newURL=newURL.replace('{stateAbbr}', stateAbbr);
+}
+
+if ( (detailedOffense) && (detailedOffense.length>0) ) {
+    newURL=newURL.replace('{detailedOffense}', detailedOffense);
+}
+
+if ( (generalOffense) && (generalOffense.length>0) ) {
+    newURL=newURL.replace('{generalOffense}', generalOffense);
+}
+
+if ( (offenderClass) && (offenderClass.length>0) ) {
+    newURL=newURL.replace('{offenderClass}', offenderClass);
+}
+
+if ( (since) && (since.length>0) ) {
+    newURL=newURL.replace('{since}', since);
+}
+
+if ( (until) && (until.length>0) ) {
+    newURL=newURL.replace('{until}', until);
+}
+
+if ( (apiKey) && (apiKey.length>0) ) {
+    newURL=newURL.replace('{apiKey}', apiKey);
+}
+
+if ( (page) && (Number.isInteger(page)) ) {
+    newURL=newURL+`&page=${page}`;
+}
+
+return newURL;
+
+}
 

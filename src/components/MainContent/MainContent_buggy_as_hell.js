@@ -42,21 +42,18 @@ export default function MainContent(props) {
 
                 console.log("Here:00009");
                 let localStates=[...props.states];
-                console.log("Here:00009.1", localStates);
                 for (let i=0; i<data.results.length; i++) {
                     console.log("Here:00009.5");
                     const stateObj={};
                     stateObj[data.results[i].state_abbr]=data.results[i].state_name;
                     localStates.push(stateObj);
                 }
-                console.log("Here:00009.6", localStates);
+                console.log(localStates);
                 console.log([...localStates]);
                 props.setStates( [...localStates] );
-                console.log("Here:00009.7", props.states);
 
                 console.log("Here:00010");
                 console.log(data.pagination, data.pagination.page, data.pagination.pages);
-
                 if ( (data.pagination) && (data.pagination.page>=0) && (data.pagination.pages>=1) ) {
                     console.log("Here:00011");
                     const currentPage=parseInt(data.pagination.page);
@@ -66,8 +63,7 @@ export default function MainContent(props) {
                     if (totalPages>0) {
                         console.log("Here:00013");
                         if (currentPage<(totalPages-1)) {
-                            console.log("Here:00013.5");
-                            fetchStateList(currentPage+1, "append");
+                            // fetchStateList(currentPage+1, "append");
                         }
                     }
                 }
@@ -98,10 +94,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row className="justify-content-between">
                         <Col xs="4" className="px-5">
-                            <CrimesSearchForm  apiKey={props.apiKey} states={props.states} />
+                            <CrimesSearchForm />
                         </Col>  
                         <Col xs="8">
-                            <SearchResults apiKey={props.apiKey} states={props.states} />
+                            <SearchResults />
                         </Col>
                     </Row>
                 </Container>
@@ -111,10 +107,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row>
                         <Col xs="4" className="px-5">
-                            <ArrestsSearchForm  apiKey={props.apiKey} states={props.states} />
+                            <ArrestsSearchForm />
                         </Col>
                         <Col xs="8">
-                            <SearchResults  apiKey={props.apiKey} states={props.states} />
+                            <SearchResults />
                         </Col>
                     </Row>
                 </Container>
