@@ -64,7 +64,7 @@ export const fbiControllers = {
                         "offense": "Offense",
                         "race": "Race",
                         "monthly": "Monthly",
-                    }
+                    },
                 },
     "arrest-tkm": {
                     "arrestStateAPI": 'https://api.usa.gov/crime/fbi/sapi/api/arrest/states/{stateAbbr}/{detailedOffense}/{offenderClass}/{since}/{until}?api_key={apiKey}',
@@ -185,5 +185,15 @@ if ( (page) && (Number.isInteger(page)) ) {
 
 return newURL;
 
+}
+
+export function randomKey(length) {
+    let str="";
+    for (let i=0; i<length; i++) {
+        str = str + String.fromCharCode( (Math.round(Math.random()*9+48)), (Math.round(Math.random()*25+65)), (Math.round(Math.random()*25+97)) );
+    }
+    return str.split('').sort( () => {
+            return [1, 0, -1][Math.round(Math.random()*2)];
+        }).join('').slice(0, length);
 }
 

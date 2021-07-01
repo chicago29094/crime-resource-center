@@ -17,6 +17,7 @@ export default function MainContent(props) {
     
     const [apiKey, setApiKey] = useState(process.env.REACT_APP_FBI_API_KEY);
     const [states, setStates] = useState([]);
+    const [searchRequest, setSearchRequest] = useState({});     
 
     const fetchStateList = async (pstates, page, fetchAction) => {
         const apiURL = generateAPIURL("", "", "", "", "", "", apiKey, fbiControllers["lookups"]["stateAPI"], page );
@@ -67,7 +68,6 @@ export default function MainContent(props) {
                 fetchStateList(states, "", "replace");
     }, []);
 
-
     return (
 
         <main>
@@ -79,10 +79,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row className="justify-content-between">
                         <Col xs="4" className="px-5">
-                            <CrimesSearchForm  apiKey={apiKey} states={states} />
+                            <CrimesSearchForm apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>  
                         <Col xs="8">
-                            <SearchResults apiKey={apiKey} states={states} />
+                            <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest}setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
                 </Container>
@@ -92,10 +92,10 @@ export default function MainContent(props) {
                 <Container fluid>
                     <Row>
                         <Col xs="4" className="px-5">
-                            <ArrestsSearchForm  apiKey={apiKey} states={states} />
+                            <ArrestsSearchForm  apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>
                         <Col xs="8">
-                            <SearchResults  apiKey={apiKey} states={states} />
+                            <SearchResults  apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
                 </Container>

@@ -1,27 +1,88 @@
+import { useState, useEffect } from 'react';
 import { Container, Col, Row } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
-import { fbiControllers } from "../../fbiAPIEndpoints";
+import { fbiControllers, randomKey } from "../../fbiAPIEndpoints";
 
 
 export default function CrimesSearchForm(props) {
+
+    const inputFields = {
+        stateSearch: '',
+        startYear: '',
+        endYear: '',
+        crimeSearch: '',
+        outputFormat: '',
+        textOutput: "",
+        chartOutput: "",
+        requestID: "",
+    }
+
+    const [formFields, setFormFields] = useState(inputFields); 
+
+    useEffect( () => {
+        setFormFields(inputFields);
+        props.setSearchRequest(inputFields);
+    },[]);
+
+    function handleSearchChange(event) {
+        console.log("target", event.target);
+        console.log("name", event.target.name);
+        console.log("id", event.target.id);
+        console.log("value", event.target.value);
+
+		const searchRequest = {
+			stateSearch: formFields.stateSearch,
+            startYear:  formFields.startYear,
+            endYear: formFields.endYear,
+            crimeSearch: formFields.crimeSearch,
+            outputFormat: formFields.outputFormat,
+            textOutput: formFields.textOutput,
+            chartOutput: formFields.chartOutput,
+            requestID: formFields.requestID
+		};        
+        if ( (event.target.id==="textOutput") && (event.target.value==="on") ) {
+            searchRequest.outputFormat="textOutput";
+            searchRequest.textOutput="checked";
+            searchRequest.chartOutput="";
+        }
+        else if ( (event.target.id==="chartOutput") && (event.target.value==="on") )  {
+            searchRequest.outputFormat="chartOutput";
+            searchRequest.textOutput="";
+            searchRequest.chartOutput="checked";
+        }
+        else {
+            searchRequest[event.target.id]=event.target.value;
+        }
+
+        setFormFields({...searchRequest});
+    }
+
+    function handleSearchSubmit(event) {
+		event.preventDefault();
+        console.log(event);
+		const requestID = {
+            requestID: randomKey(16),
+		};                
+        props.setSearchRequest({...formFields}, requestID);
+        setFormFields(inputFields);
+	}
 
     return (
         <div className="crime-search-form">
             <h2>Crimes Search Form</h2>
 
-            <Form>
+            <Form onSubmit={handleSearchSubmit}>
 
                 <Form.Group as={Row} controlId="stateSearch">                    
                     <Form.Label column sm="1">State:</Form.Label>
                     <Col sm="11">
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={handleSearchChange} value={formFields.stateSearch.value} >
                         <option value="">Select...</option>
                         {
                             props.states.map( ( element, index) => {
                                     const state = Object.entries(element);
                                     const stateAbbr=state[0][0];
                                     const stateName=state[0][1];
-                                    console.log(state, stateAbbr, stateName);
                                     return <option key={index}keyid value={stateAbbr}>{stateName}</option>
                                 }
                             )
@@ -31,11 +92,11 @@ export default function CrimesSearchForm(props) {
                 </Form.Group>
 
     
-                <Form.Group as={Col} controlId="yearRange">
+                <Form.Group as={Col} controlId="startYear">
                     <Row className="justify-content-md-start">
-                        <Form.Label column xs="auto">Start Year:</Form.Label>
+                        <Form.Label column xs="auto" >Start Year:</Form.Label>
                         <Col>
-                        <Form.Control as="select">
+                        <Form.Control as="select" onChange={handleSearchChange} value={formFields.startYear.value}>
                         <option value="">Select...</option>
                         { 
                             (() => {
@@ -50,10 +111,14 @@ export default function CrimesSearchForm(props) {
                         }
                         </Form.Control>
                         </Col>
+                    </Row>
+                    </Form.Group>
 
+                    <Form.Group as={Col} controlId="endYear">
+                        <Row className="justify-content-md-start">
                         <Form.Label column xs="auto">End Year:</Form.Label>
                         <Col>
-                            <Form.Control as="select">
+                            <Form.Control as="select" onChange={handleSearchChange}  value={formFields.endYear.value}>
                             <option value="">Select...</option>
                             { 
                             (() => {
@@ -73,12 +138,11 @@ export default function CrimesSearchForm(props) {
     
                 <Form.Group controlId="crimeSearch">
                     <Form.Label>Major Offense Type:</Form.Label>
-                    <Form.Control as="select">
+                    <Form.Control as="select" onChange={handleSearchChange}  value={formFields.crimeSearch.value}>
                     <option value="">Select...</option>
                     {
                         Object.entries(fbiControllers["offense-tkm"]["generalOffense"]).map(
                             (key, index) => {
-                                console.log(`key=[${key}] index=${index}`)
                                 return <option key={key[0]}offid value={key[0]}>{key[1]}</option>
                             }
                         )   
@@ -93,20 +157,24 @@ export default function CrimesSearchForm(props) {
                         label="Chart"
                         name="outputFormat"
                         type="radio"
-                        id={`chartoutput`}
-                        checked
+                        id={`chartOutput`}
+                        checked={formFields.chartOutput}
+                        onChange={handleSearchChange} 
+                        onClick={handleSearchChange} 
                     />
                     <Form.Check
                         inline
                         label="Text"
                         name="outputFormat"
                         type="radio"
-                        id={`textoutput`}
+                        id={`textOutput`}
+                        checked={formFields.textOutput}
+                        onChange={handleSearchChange}
+                        onClick={handleSearchChange}
                     />
                 </div>
 
-
-                <Button variant="primary" type="submit">
+                <Button variant="primary" type="submit" >
                     Search Crime Data
                 </Button>
 
