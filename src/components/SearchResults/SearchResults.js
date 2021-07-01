@@ -84,6 +84,15 @@ export default function SearchResults(props) {
                     }
                 }
 
+                // Sort the Records by Year
+                if (props.searchRequest.searchType==="Crime State") {
+                    localCrimeData.sort( (recA, recB) => {
+                        if (recA['year']<recB['year']) return -1;
+                        else if (recA['year']===recB['year']) return 0;
+                        else return 1;
+                    } )
+                }
+
                 setCrimeData( localCrimeData );
 
                 if ( (stats.pagination) && (stats.pagination.page>=0) && (stats.pagination.pages>=1) ) {
@@ -106,7 +115,7 @@ export default function SearchResults(props) {
 
     useEffect( () => {
                 console.log("Here:00001: Before useEffect Fetch Requested");
-                fetchCrimeData(crimeData, "", "replace");
+                fetchCrimeData([], "", "replace");
                 console.log("Here:00002: After useEffect Fetch Requested");
     }, [props.searchRequest]);
 
