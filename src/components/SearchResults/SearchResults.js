@@ -9,6 +9,9 @@ export default function SearchResults(props) {
     // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
     
     console.log("SearchResults Component Loading....");
+    console.log("SearchResults:", props);
+    console.log("SearchResults:", props.searchRequest);
+    console.log("SearchResults:", props.searchRequest.stateSearch);
 
     const [crimeData, setCrimeData] = useState([]);
    
@@ -19,6 +22,7 @@ export default function SearchResults(props) {
     let offenderClass="";
     let since="";
     let until="";
+    let states={};
 
     // Check to see if properties exist before trying to assign them, to prevent errors.
     if (props.searchRequest.stateSearch) stateAbbr = props.searchRequest.stateSearch;
@@ -30,6 +34,8 @@ export default function SearchResults(props) {
     if (props.searchRequest.offenderClass)  offenderClass = props.searchRequest.offenderClass;
     if (props.searchRequest.startYear) since = props.searchRequest.startYear;
     if (props.searchRequest.endYear) until = props.searchRequest.endYear;
+
+    if (props.states) states=props.states;
 
     const fetchCrimeData = async (currentCrimeData, page, fetchAction) => {
         console.log("Here:00000: Fetch Requested");
@@ -55,16 +61,29 @@ export default function SearchResults(props) {
 
             const stats = await response.json();
 
-            if ( (stats) && (stats.data) && (stats.data.length>0) ) {
-                if (fetchAction==="replace") {
-                    setCrimeData([]);
-                }
+            if ( (stats) && 
+                 ( ( (stats.data) && (stats.data.length>0) ) || 
+                   ( (stats.results) && (stats.results.length>0) ) ) ) {
+
+                    if (fetchAction==="replace") {
+                        setCrimeData([]);
+                    }
 
                 let localCrimeData=[...currentCrimeData];
-                for (let i=0; i<stats.data.length; i++) {
-                    const crimeObj=stats.data[i];
-                    localCrimeData.push(crimeObj);
+
+                if (stats.data) {
+                    for (let i=0; i<stats.data.length; i++) {
+                        const crimeObj=stats.data[i];
+                        localCrimeData.push(crimeObj);
+                    }
                 }
+                else if (stats.results) {
+                    for (let i=0; i<stats.results.length; i++) {
+                        const crimeObj=stats.results[i];
+                        localCrimeData.push(crimeObj);
+                    }
+                }
+
                 setCrimeData( localCrimeData );
 
                 if ( (stats.pagination) && (stats.pagination.page>=0) && (stats.pagination.pages>=1) ) {
@@ -97,12 +116,12 @@ export default function SearchResults(props) {
 
     if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') ) {
         return (
-            <SearchResultsText apiKey={props.apiKey} searchRequest={props.searchRequest} crimeDate={crimeData} />
+            <SearchResultsText apiKey={props.apiKey} states={states} searchRequest={props.searchRequest} crimeData={crimeData} />
         )
     }
     else if ( (props.searchRequest) && (props.searchRequest.outputFormat==='chartOutput') ) {
         return (
-            <SearchResultsChart apiKey={props.apiKey} searchRequest={props.searchRequest} crimeDate={crimeData} />
+            <SearchResultsChart apiKey={props.apiKey} states={states}  searchRequest={props.searchRequest} crimeData={crimeData} />
         )
     }
     else 

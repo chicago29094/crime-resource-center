@@ -7,13 +7,14 @@ import { fbiControllers, randomKey } from "../../fbiAPIEndpoints";
 export default function CrimesSearchForm(props) {
 
     const inputFields = {
+        searchType: "",
         stateSearch: '',
         startYear: '',
         endYear: '',
         crimeSearch: '',
         outputFormat: '',
         textOutput: "",
-        chartOutput: "",
+        chartOutput: "true",
         requestID: "",
     }
 
@@ -31,6 +32,7 @@ export default function CrimesSearchForm(props) {
         console.log("value", event.target.value);
 
 		const searchRequest = {
+            searchType: formFields.searchType,
 			stateSearch: formFields.stateSearch,
             startYear:  formFields.startYear,
             endYear: formFields.endYear,
@@ -64,7 +66,7 @@ export default function CrimesSearchForm(props) {
             searchType: "Crime State",
             requestID: randomKey(16),
 		};                
-        props.setSearchRequest({...formFields}, request);
+        props.setSearchRequest({...formFields, ...request});
         //setFormFields(inputFields);
 	}
 
@@ -77,7 +79,7 @@ export default function CrimesSearchForm(props) {
                 <Form.Group as={Row} controlId="stateSearch">                    
                     <Form.Label column sm="1">State:</Form.Label>
                     <Col sm="11">
-                        <Form.Control as="select" onChange={handleSearchChange} value={formFields.stateSearch.value} >
+                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.stateSearch.value} >
                         <option value="">Select...</option>
                         {
                             props.states.map( ( element, index) => {
@@ -97,18 +99,18 @@ export default function CrimesSearchForm(props) {
                     <Row className="justify-content-md-start">
                         <Form.Label column xs="auto" >Start Year:</Form.Label>
                         <Col>
-                        <Form.Control as="select" onChange={handleSearchChange} value={formFields.startYear.value}>
+                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.startYear.value}>
                         <option value="">Select...</option>
                         { 
-                            (() => {
-                                const yearsOptions=[];
-                                for (let i=1990; i<=2019; i++) {
-                                    yearsOptions.push(i);
-                                }
-                                return yearsOptions;
-                            })().map( (year, index) => 
+                                (() => {
+                                    const yearsOptions=[];
+                                    for (let i=1990; i<=2019; i++) {
+                                        yearsOptions.push(i);
+                                    }
+                                    return yearsOptions;
+                                })().map( (year, index) => 
                                     <option key={year}keyid value={year}>{year}</option>
-                                )
+                                )  
                         }
                         </Form.Control>
                         </Col>
@@ -119,16 +121,16 @@ export default function CrimesSearchForm(props) {
                         <Row className="justify-content-md-start">
                         <Form.Label column xs="auto">End Year:</Form.Label>
                         <Col>
-                            <Form.Control as="select" onChange={handleSearchChange}  value={formFields.endYear.value}>
+                            <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.endYear.value}>
                             <option value="">Select...</option>
                             { 
-                            (() => {
-                                const yearsOptions=[];
-                                for (let i=1990; i<=2019; i++) {
-                                    yearsOptions.push(i);
-                                }
-                                return yearsOptions;
-                            })().map( (year, index) => 
+                                (() => {
+                                    const yearsOptions=[];
+                                    for (let i=1990; i<=2019; i++) {
+                                        yearsOptions.push(i);
+                                    }
+                                    return yearsOptions;
+                                })().map( (year, index) => 
                                     <option key={year}keyid value={year}>{year}</option>
                                 )
                         }
@@ -139,7 +141,7 @@ export default function CrimesSearchForm(props) {
     
                 <Form.Group controlId="crimeSearch">
                     <Form.Label>Major Offense Type:</Form.Label>
-                    <Form.Control as="select" onChange={handleSearchChange}  value={formFields.crimeSearch.value}>
+                    <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.crimeSearch.value}>
                     <option value="">Select...</option>
                     {
                         Object.entries(fbiControllers["offense-tkm"]["generalOffense"]).map(

@@ -65,7 +65,7 @@ export default function MainContent(props) {
 
 
     useEffect( () => {
-                fetchStateList(states, "", "replace");
+                fetchStateList([], "", "replace");
     }, []);
 
     return (
@@ -82,7 +82,7 @@ export default function MainContent(props) {
                             <CrimesSearchForm apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>  
                         <Col xs="8">
-                            <SearchResults apiKey={apiKey} searchRequest={searchRequest}setSearchRequest={setSearchRequest} />
+                            <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
                 </Container>
@@ -95,7 +95,7 @@ export default function MainContent(props) {
                             <ArrestsSearchForm  apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>
                         <Col xs="8">
-                            <SearchResults  apiKey={apiKey} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
+                            <SearchResults  apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
                 </Container>
