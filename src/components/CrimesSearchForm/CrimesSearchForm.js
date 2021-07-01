@@ -65,7 +65,7 @@ export default function CrimesSearchForm(props) {
             requestID: randomKey(16),
 		};                
         props.setSearchRequest({...formFields}, request);
-        setFormFields(inputFields);
+        //setFormFields(inputFields);
 	}
 
     return (

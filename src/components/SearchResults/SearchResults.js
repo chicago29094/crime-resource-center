@@ -1,49 +1,79 @@
 import { useState, useEffect } from "react";
 import { Container, Col, Row } from "react-bootstrap";
 import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints";
-import { SearchResultsText } from '../SearchResultsText/SearchResultsText'
-import { SearchResultsChart } from '../SearchResultsChart/SearchResultsChart'
+import SearchResultsText  from '../SearchResultsText/SearchResultsText';
+import SearchResultsChart from '../SearchResultsChart/SearchResultsChart';
 
 export default function SearchResults(props) {
 
-    // console.log("Here:", fbiControllers['lookups'].stateAPI);
-    // console.log("Here2:", fbiControllers["arrest-data"]["detailedOffense"]);
     // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
     
-    const fetchStateList = async (pstates, page, fetchAction) => {
-        const apiURL = generateAPIURL("", "", "", "", "", "", apiKey, fbiControllers["lookups"]["stateAPI"], page );
+    console.log("SearchResults Component Loading....");
+
+    const [crimeData, setCrimeData] = useState([]);
+   
+    // Search Request object properties that may or may not be set
+    let stateAbbr="";
+    let detailedOffense="";
+    let generalOffense="";
+    let offenderClass="";
+    let since="";
+    let until="";
+
+    // Check to see if properties exist before trying to assign them, to prevent errors.
+    if (props.searchRequest.stateSearch) stateAbbr = props.searchRequest.stateSearch;
+    if (props.searchRequest.detailedOffense) detailedOffense = props.searchRequest.detailedOffense;
+
+    if (props.searchRequest.generalOffense)  generalOffense = props.searchRequest.generalOffense;
+    if (props.searchRequest.crimeSearch)  generalOffense = props.searchRequest.crimeSearch;
+
+    if (props.searchRequest.offenderClass)  offenderClass = props.searchRequest.offenderClass;
+    if (props.searchRequest.startYear) since = props.searchRequest.startYear;
+    if (props.searchRequest.endYear) until = props.searchRequest.endYear;
+
+    const fetchCrimeData = async (currentCrimeData, page, fetchAction) => {
+        console.log("Here:00000: Fetch Requested");
+        let useFBIControllerAPI="";
+        if (props.searchRequest.searchType==="Crime State") {
+            useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];
+        }
+        else {
+            useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];     
+        }
+        const apiURL = generateAPIURL(stateAbbr, detailedOffense, generalOffense, offenderClass, since, until, props.apiKey, useFBIControllerAPI, page );
+
         console.log("apiURL=", apiURL);
+
         try { 
             // fetch
             const response = await fetch(apiURL);
 
             if ( (!response.ok) || (response.status!==200) ) {
-                const message = `An error occurred while retrieving the list of available U.S. States.  Please try again or contact the CRC administrator.`;
+                const message = `An error occurred while retrieving the requested FBI Crime and Arrest statistics.  Please try again or contact the CRC administrator for further assistance.`;
                 throw new Error(message);
             }
 
-            const data = await response.json();
+            const stats = await response.json();
 
-            if ( (data) && (data.results) && (data.results.length>0) ) {
+            if ( (stats) && (stats.data) && (stats.data.length>0) ) {
                 if (fetchAction==="replace") {
-                    setStates([]);
+                    setCrimeData([]);
                 }
 
-                let localStates=[...pstates];
-                for (let i=0; i<data.results.length; i++) {
-                    const stateObj={};
-                    stateObj[data.results[i].state_abbr]=data.results[i].state_name;
-                    localStates.push(stateObj);
+                let localCrimeData=[...currentCrimeData];
+                for (let i=0; i<stats.data.length; i++) {
+                    const crimeObj=stats.data[i];
+                    localCrimeData.push(crimeObj);
                 }
-                setStates( localStates );
+                setCrimeData( localCrimeData );
 
-                if ( (data.pagination) && (data.pagination.page>=0) && (data.pagination.pages>=1) ) {
-                    const currentPage=parseInt(data.pagination.page);
-                    const totalPages=parseInt(data.pagination.pages);
+                if ( (stats.pagination) && (stats.pagination.page>=0) && (stats.pagination.pages>=1) ) {
+                    const currentPage=parseInt(stats.pagination.page);
+                    const totalPages=parseInt(stats.pagination.pages);
 
                     if (totalPages>0) {
                         if (currentPage<(totalPages-1)) {
-                            fetchStateList(localStates, currentPage+1, "append");
+                            fetchCrimeData(localCrimeData, currentPage+1, "append");
                         }
                     }
                 }
@@ -56,17 +86,23 @@ export default function SearchResults(props) {
 
 
     useEffect( () => {
-                fetchStateList(states, "", "replace");
-    }, []);
+                console.log("Here:00001: Before useEffect Fetch Requested");
+                fetchCrimeData(crimeData, "", "replace");
+                console.log("Here:00002: After useEffect Fetch Requested");
+    }, [props.searchRequest]);
 
-    if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') {
+    console.log("Here:0001", props.apiKey);
+    console.log("Here:0002", props.searchRequest);
+    console.log("Here:0003", crimeData);
+
+    if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') ) {
         return (
-            <SearchResultsText />
+            <SearchResultsText apiKey={props.apiKey} searchRequest={props.searchRequest} crimeDate={crimeData} />
         )
     }
-    else if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') {
+    else if ( (props.searchRequest) && (props.searchRequest.outputFormat==='chartOutput') ) {
         return (
-            <SearchResultsChart />
+            <SearchResultsChart apiKey={props.apiKey} searchRequest={props.searchRequest} crimeDate={crimeData} />
         )
     }
     else 
