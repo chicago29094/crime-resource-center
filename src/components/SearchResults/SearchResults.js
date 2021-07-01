@@ -91,6 +91,13 @@ export default function SearchResults(props) {
                         else if (recA['year']===recB['year']) return 0;
                         else return 1;
                     } )
+                    // Cleanup inconsistent reporting of rape statistics
+                    for (let i=0; i<localCrimeData.length; i++) {
+                        if (localCrimeData[i].rape===undefined) {
+                            if (localCrimeData[i]['rape_legacy']) localCrimeData[i].rape=localCrimeData[i]['rape_legacy'];
+                            if ( (localCrimeData[i]['rape_revised']) && (localCrimeData[i]['rape_revised']!==null) ) localCrimeData[i].rape=localCrimeData[i]['rape_revised'];
+                        }
+                    }
                 }
 
                 setCrimeData( localCrimeData );
