@@ -60,10 +60,11 @@ export default function CrimesSearchForm(props) {
     function handleSearchSubmit(event) {
 		event.preventDefault();
         console.log(event);
-		const requestID = {
+		const request = {
+            searchType: "Crime State",
             requestID: randomKey(16),
 		};                
-        props.setSearchRequest({...formFields}, requestID);
+        props.setSearchRequest({...formFields}, request);
         setFormFields(inputFields);
 	}
 
