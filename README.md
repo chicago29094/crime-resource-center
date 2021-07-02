@@ -9,9 +9,9 @@ ___
 The Online Federal Crime Resource Center ("OFCRC") provides two search forms for exploring and analyzing crime and arrest statistics from the FBI’s Uniform Crime Reporting (UCR) datasets.  These datasets are comprised of data that spans 1930 through 2019 and reportedly hundreds of gigabytes.  The focus of OFCRC is on data from 1990 through 2019.  The interfaces provided allow the user to search crime statistics by state.  The user is presented with search form options on the crime or arrest data they are interested in viewing over a particular year-based date range.  The user is provided with options to either view the data in a text-based table format or in a graphical chart format.
 
 **Link to GitHub Repository site:** https://github.com/chicago29094/crime-resource-center
-**Link to Deployed public Website:** https://chicago29094.github.io/
+**Link to Deployed public Website:** https://crime-resource-center.netlify.app/crimes
 
-### Game summary:
+### Project Summary:
 You are the band member for the rock band Bad Tendencies. Your job is to get the band members on stage and to keep them out of trouble. If you get close to a band member they will follow you to the stage, unless they are distracted or under the influence. You can collect money as you move along, otherwise the band members will grab it and likely waste it to support their Rock-n-Roll lifestyle. Use the keyboard arrow keys to move around. Good Luck!!!.
 
 The game ends when one of the following conditions is met:
@@ -30,17 +30,18 @@ ___
 - The site uses, yarn, Bootstrap, React-Bootstrap, React, Chart.js, React-Chartjs2.
 - Download the repo from https://github.com/chicago29094/crime-resource-center
 - To deploy locally on your own computer, utilize yarn start to  start the Website's execution.
+- You must obtain and install your own FBI API key in .env.local in your copy of the repository.  API keys can be requested at the following location: https://api.data.gov/signup/
 
 ## Contribution Instructions
 - Contributions, suggestions, feature requests, or bug reports can be e-mailed to ofcrc@uswide.net.
-- Input cn also be provided by contact the developer Harry Anastopoulos via the public GitHub repository for the OFCRC system.
+- Input can also be provided by contact the developer Harry Anastopoulos via the public GitHub repository for the OFCRC system.
 
 ## Lessons Learned/Ongoing Issues:
 ### Lessons Learned
 - React-Bootstrap is not well documented and their are many features that are either missing or are just not documented by the developers.
 - The control and resetting of complex Web forms is not well documented for Bootstrap, React-Bootstrap, and React. It is apparent from Web comments that many developers are not well verses on how these technologies work.
 - Too many online individuals suggest downloading third-part apps and modules to solve common React and Bootstrap limitations and problems.
-- The FBI APIs are not 100% accurately documented/
+- The FBI APIs are not 100% accurately documented.
   
 ### Ongoing Issues
 - A more robust form validation system is needed.
