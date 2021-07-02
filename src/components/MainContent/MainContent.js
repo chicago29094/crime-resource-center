@@ -11,17 +11,13 @@ import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints"
 
 export default function MainContent(props) {
 
-    // console.log("Here:", fbiControllers['lookups'].stateAPI);
-    // console.log("Here2:", fbiControllers["arrest-data"]["detailedOffense"]);
-    // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
-    
     const [apiKey, setApiKey] = useState(process.env.REACT_APP_FBI_API_KEY);
     const [states, setStates] = useState([]);
     const [searchRequest, setSearchRequest] = useState({});
+    const [errorState, setErrorState] = useState({state: false, title: '', message: '',});
 
     const fetchStateList = async (pstates, page, fetchAction) => {
         const apiURL = generateAPIURL("", "", "", "", "", "", apiKey, fbiControllers["lookups"]["stateAPI"], page );
-        console.log("apiURL=", apiURL);
         try { 
             // fetch
             const response = await fetch(apiURL);
@@ -59,7 +55,12 @@ export default function MainContent(props) {
             }
 
         } catch(error) {
-            console.log(error);
+            const errorObj = {
+                state: true,
+                title: 'Search Error',
+                message: error,
+            }
+            setErrorState(errorObj);
         }
     }
 
