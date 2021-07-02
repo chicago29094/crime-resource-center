@@ -6,13 +6,42 @@ body {
 }
 
 h1 {
-    font-size: 3.2rem;
+    font-size: 2.9 rem;
     font-weight: 800;
+}
+
+.hero-container div {
+    text-align: center;
+    color: #ffffff;
+    padding: 40px 20px 60px 20px;
+    margin-bottom: 30px;    
+}
+
+.hero-container p {
+
+    text-align: center;
+    font-size: 2.5rem;
+    text-shadow: 3px 3px #000000;
+    color: #ffffff;
+}
+
+#hero-button {
+    margin: 20px;
+    opacity: 1.0;
 }
 
 img.header-logo {
     max-height:125px;
 }
+
+img.fbi-seal {
+    max-height:125px;
+}
+ img.hero-image {
+     max-width: 100%;
+     margin-bottom: 30px;
+     opacity: 0.5;
+ }
 
 .crc-footer {
     margin: 0px 0px 0px 0px;

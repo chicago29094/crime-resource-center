@@ -7,7 +7,7 @@ export default function Footer(props) {
             
                 <h3>Site Information and Resources</h3>
 
-                <Row className="justify-content-md-center">
+                <Row className="justify-content-md-center" >
 
                     <Col xs="3">
                         <h4>About</h4>

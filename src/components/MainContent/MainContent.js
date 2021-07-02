@@ -6,7 +6,7 @@ import Contribute from "../Contribute/Contribute"
 import Hero from "../Hero/Hero"
 import ArrestsSearchForm from "../ArrestsSearchForm/ArrestsSearchForm"
 import CrimesSearchForm from "../CrimesSearchForm/CrimesSearchForm"
-import SearchResults from "../SearchResults/SearchResults_backup2"
+import SearchResults from "../SearchResults/SearchResults"
 import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints"
 
 export default function MainContent(props) {
@@ -78,10 +78,10 @@ export default function MainContent(props) {
             <Route path="/crimes" exact>
                 <Container fluid>
                     <Row className="justify-content-between">
-                        <Col lg="4" md="1" className="px-5">
+                        <Col xl="4" lg="6" md="6" sm="6" className="px-5">
                             <CrimesSearchForm apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>  
-                        <Col lg="8" md="1" >
+                        <Col xl="8" lg="6" md="6"  sm="6" >
                             <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest}  />
                         </Col>
                     </Row>
@@ -91,10 +91,10 @@ export default function MainContent(props) {
             <Route path="/arrests" exact>
                 <Container fluid>
                     <Row>
-                        <Col lg="4" md="1" className="px-5">
+                        <Col xl="4" lg="6" md="6"  sm="6" className="px-5">
                             <ArrestsSearchForm  apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>
-                        <Col lg="8" md="1" >
+                        <Col xl="8" lg="6" md="6"  sm="6" >
                             <SearchResults  apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
