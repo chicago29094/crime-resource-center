@@ -17,7 +17,7 @@ export default function MainContent(props) {
     
     const [apiKey, setApiKey] = useState(process.env.REACT_APP_FBI_API_KEY);
     const [states, setStates] = useState([]);
-    const [searchRequest, setSearchRequest] = useState({});     
+    const [searchRequest, setSearchRequest] = useState({});
 
     const fetchStateList = async (pstates, page, fetchAction) => {
         const apiURL = generateAPIURL("", "", "", "", "", "", apiKey, fbiControllers["lookups"]["stateAPI"], page );
@@ -82,7 +82,7 @@ export default function MainContent(props) {
                             <CrimesSearchForm apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>  
                         <Col xs="8">
-                            <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
+                            <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest}  />
                         </Col>
                     </Row>
                 </Container>

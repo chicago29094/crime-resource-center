@@ -30,11 +30,19 @@ export default function SearchResultsChart(props) {
     responsive: true,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'top',
+        labels: {
+        font: {
+          size: 18
+        },
+      }
       },
       title: {
         display: true,
         text: '',
+        font: {
+            size: 24
+        },
       },
     },
   };
@@ -111,24 +119,24 @@ export default function SearchResultsChart(props) {
         crimeData[index][generalOffenseUnderscore] : 0);
         chartData.labels.push(crimeData[index].year);
 
-        let randomRed=(Math.round(Math.random()*180)+40);
-        let randomRedBorder=randomRed-20;
-        let randomBlue=(Math.round(Math.random()*180)+40);
-        let randomBlueBorder=randomBlue-20;
-        let randomGreen=(Math.round(Math.random()*180)+40);
-        let randomGreenBorder=randomGreen-20;
+        let randomRed=(Math.round(Math.random()*200)+25);
+        let randomRedBorder=randomRed-25;
+        let randomBlue=(Math.round(Math.random()*200)+25);
+        let randomBlueBorder=randomBlue-25;
+        let randomGreen=(Math.round(Math.random()*200)+25);
+        let randomGreenBorder=randomGreen-25;
 
-        let randomBarColor=`rgba(${randomRed}, ${randomBlue}, ${randomGreen}, 0.7)`;
-        let randomBarColorBorder=`rgba(${randomRedBorder}, ${randomBlueBorder}, ${randomGreenBorder}, 0.7)`;
+        let randomBarColor=`rgba(${randomRed}, ${randomBlue}, ${randomGreen}, 0.8)`;
+        let randomBarColorBorder=`rgba(${randomRedBorder}, ${randomBlueBorder}, ${randomGreenBorder}, 0.8)`;
 
         chartData.datasets[0].backgroundColor.push(randomBarColor);
         chartData.datasets[0].borderColor.push(randomBarColorBorder);
       }
-      chartData.datasets[0].level="# of Offenses";
+      chartData.datasets[0].label="# of Offenses";
       chartOptions.plugins.title.text=`Offense: ${generalOffenseFormatted}  Years: ${since} to ${until} `;
 
       return (
-        <div>
+        <div className='crime-chart'>
           <h4>Crime Statistics for {stateFormatted}</h4>
           <h5>Offense: {generalOffenseFormatted}  Years: {since} to {until} </h5>
 
@@ -146,7 +154,7 @@ export default function SearchResultsChart(props) {
   else {
 
     return (
-          <div>
+          <div className='crime-chart'>
               <p>Please use the search form to view statistics.</p>
           </div>
       )        

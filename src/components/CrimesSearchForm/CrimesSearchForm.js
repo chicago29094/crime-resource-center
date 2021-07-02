@@ -6,13 +6,15 @@ import { fbiControllers, randomKey } from "../../fbiAPIEndpoints";
 
 export default function CrimesSearchForm(props) {
 
+   console.log("CrimesSearchForm Loading....");
+
     const inputFields = {
         searchType: "",
         stateSearch: '',
         startYear: '',
         endYear: '',
         crimeSearch: '',
-        outputFormat: '',
+        outputFormat: 'chartOutput',
         textOutput: "",
         chartOutput: "true",
         requestID: "",
@@ -21,8 +23,8 @@ export default function CrimesSearchForm(props) {
     const [formFields, setFormFields] = useState(inputFields); 
 
     useEffect( () => {
-        setFormFields(inputFields);
-        props.setSearchRequest(inputFields);
+        setFormFields({...inputFields});
+        props.setSearchRequest({...inputFields});
     },[]);
 
     function handleSearchChange(event) {
@@ -57,29 +59,31 @@ export default function CrimesSearchForm(props) {
         }
 
         setFormFields({...searchRequest});
+
     }
 
+    
     function handleSearchSubmit(event) {
 		event.preventDefault();
-        console.log(event);
+        console.log("Submit", event);
 		const request = {
             searchType: "Crime State",
             requestID: randomKey(16),
 		};                
         props.setSearchRequest({...formFields, ...request});
-        //setFormFields(inputFields);
+        //setFormFields({...inputFields});
 	}
 
     return (
         <div className="crime-search-form">
             <h2>Crimes Search Form</h2>
 
-            <Form onSubmit={handleSearchSubmit}>
+            <Form id="crimeSearchForm" onSubmit={handleSearchSubmit}>
 
                 <Form.Group as={Row} controlId="stateSearch">                    
                     <Form.Label column sm="1">State:</Form.Label>
                     <Col sm="11">
-                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.stateSearch.value} >
+                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.stateSearch.value} defaultValue={formFields.stateSearch.value}>
                         <option value="">Select...</option>
                         {
                             props.states.map( ( element, index) => {
@@ -99,7 +103,7 @@ export default function CrimesSearchForm(props) {
                     <Row className="justify-content-md-start">
                         <Form.Label column xs="auto" >Start Year:</Form.Label>
                         <Col>
-                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.startYear.value}>
+                        <Form.Control as="select" required onChange={handleSearchChange} value={formFields.startYear.value} defaultValue={formFields.stateSearch.value}>
                         <option value="">Select...</option>
                         { 
                                 (() => {
@@ -121,8 +125,8 @@ export default function CrimesSearchForm(props) {
                         <Row className="justify-content-md-start">
                         <Form.Label column xs="auto">End Year:</Form.Label>
                         <Col>
-                            <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.endYear.value}>
-                            <option value="">Select...</option>
+                            <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.endYear.value} defaultValue={formFields.stateSearch.value}>
+                            <option value="" >Select...</option>
                             { 
                                 (() => {
                                     const yearsOptions=[];
@@ -141,8 +145,8 @@ export default function CrimesSearchForm(props) {
     
                 <Form.Group controlId="crimeSearch">
                     <Form.Label>Major Offense Type:</Form.Label>
-                    <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.crimeSearch.value}>
-                    <option value="">Select...</option>
+                    <Form.Control as="select" required onChange={handleSearchChange}  value={formFields.crimeSearch.value} defaultValue={formFields.stateSearch.value}>
+                    <option value="" >Select...</option>
                     {
                         Object.entries(fbiControllers["offense-tkm"]["generalOffense"]).map(
                             (key, index) => {
@@ -177,7 +181,7 @@ export default function CrimesSearchForm(props) {
                     />
                 </div>
 
-                <Button variant="primary" type="submit" >
+                <Button variant="primary mr-3" type="submit" id="submitForm">
                     Search Crime Data
                 </Button>
 

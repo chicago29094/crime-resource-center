@@ -71,7 +71,7 @@ export default function SearchResultsText(props) {
     if (searchRequest.searchType==="Crime State") {
 
         return (
-            <div>
+            <div className="crime-text">
                 <h4>Crime Statistics for {stateFormatted}</h4>
                 <h5>Offense: {generalOffenseFormatted}  Years: {since} to {until} </h5>
             
@@ -96,7 +96,6 @@ export default function SearchResultsText(props) {
                     {crimeData.map( (element, index) => { return (
                         <tr key={index}>
                             <td>{crimeData[index].year}</td>
-                            {console.log('value=', crimeData[index][generalOffenseUnderscore])}
                             <td>{ ( (crimeData[index][generalOffenseUnderscore]!==undefined) && 
                                      (crimeData[index][generalOffenseUnderscore]!==null) ) ?  
                             parseInt(crimeData[index][generalOffenseUnderscore]).toLocaleString('en-US', 0) : 'Unavailable' }</td>
@@ -111,7 +110,7 @@ export default function SearchResultsText(props) {
     }
     else {
         return (
-            <div>
+            <div className="crime-text">
                 <p>Please use the search form to view statistics.</p>
             </div>
         )        
