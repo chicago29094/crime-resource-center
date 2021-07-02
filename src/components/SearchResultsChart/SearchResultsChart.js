@@ -140,9 +140,7 @@ export default function SearchResultsChart(props) {
 
       return (
         <div className='crime-chart'>
-          <h4>Crime Statistics for {stateFormatted}</h4>
-          <h5>Offense: {generalOffenseFormatted}  Years: {since} to {until} </h5>
-
+       
           <div className='header'>
               
           <h1 className='title'>Crime Statistics for {stateFormatted}</h1>
@@ -180,9 +178,7 @@ export default function SearchResultsChart(props) {
 
     return (
       <div className='crime-chart'>
-        <h4>Arrest Statistics for {stateFormatted}</h4>
-        <h5>Offense: {detailedOffenseFormatted}  Years: {since} to {until} </h5>
-
+     
         <div className='header'>
             
         <h1 className='title'>Arrest Statistics for {stateFormatted}</h1>
