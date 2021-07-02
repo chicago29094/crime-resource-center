@@ -1,17 +1,9 @@
 import { useState, useEffect } from "react";
-import { Container, Col, Row } from "react-bootstrap";
 import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints";
 import SearchResultsText  from '../SearchResultsText/SearchResultsText';
 import SearchResultsChart from '../SearchResultsChart/SearchResultsChart';
 
 export default function SearchResults(props) {
-
-    // console.log("Here3:", generateAPIURL("IL", "burglary", "rape", "male", "1991", "2019", "abcdefghijk", fbiControllers["arrest-data"]["arrestAPI"]) );
-    
-    console.log("SearchResults Component Loading....");
-    console.log("SearchResults:", props);
-    console.log("SearchResults:", props.searchRequest);
-    console.log("SearchResults:", props.searchRequest.stateSearch);
 
     const [crimeData, setCrimeData] = useState([]);
     const [errorState, setErrorState] = useState({state: false, title: '', message: '',});
@@ -39,7 +31,6 @@ export default function SearchResults(props) {
     if (props.states) states=props.states;
 
     const fetchCrimeData = async (currentCrimeData, page, fetchAction) => {
-        console.log("Here:00000: Fetch Requested");
         let useFBIControllerAPI="";
         if (props.searchRequest.searchType==="Crime State") {
             useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];
@@ -51,8 +42,6 @@ export default function SearchResults(props) {
             useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];     
         }
         const apiURL = generateAPIURL(stateAbbr, detailedOffense, generalOffense, offenderClass, since, until, props.apiKey, useFBIControllerAPI, page );
-
-        console.log("apiURL=", apiURL);
 
         if ( (apiURL.indexOf('{')!==-1) || (apiURL.indexOf('}')!==-1) ) {
             return;
@@ -143,14 +132,8 @@ export default function SearchResults(props) {
 
     
     useEffect( () => {
-                console.log("Here:00001: Before useEffect Fetch Requested");
                 fetchCrimeData([], "", "replace");
-                console.log("Here:00002: After useEffect Fetch Requested");
     }, [props.searchRequest]);
-
-    console.log("Here:0001", props.apiKey);
-    console.log("Here:0002", props.searchRequest);
-    console.log("Here:0003", crimeData);
 
     if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') ) {
         return (

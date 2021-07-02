@@ -1,5 +1,5 @@
 
-import { Container, Col, Row } from "react-bootstrap"
+import { Container, Col  } from "react-bootstrap"
 export default function Contribute(props) {
 
     return (

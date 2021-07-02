@@ -1,9 +1,5 @@
-import { useState, useEffect } from "react";
-import { Container, Col, Row } from "react-bootstrap";
-import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints";
+import { fbiControllers  }  from "../../fbiAPIEndpoints";
 import { Bar } from 'react-chartjs-2';
-
-
 
 export default function SearchResultsChart(props) {
 
@@ -46,8 +42,6 @@ export default function SearchResultsChart(props) {
       },
     },
   };
-
-    console.log('SearchResultsChart Rendering', Date.now());
 
     if ( (!props.searchRequest) || (!props.crimeData) ) {
       return (
@@ -202,3 +196,5 @@ export default function SearchResultsChart(props) {
 
  }
 
+
+ 

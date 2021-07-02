@@ -1,12 +1,10 @@
 import { useState, useEffect } from 'react';
-import { Container, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { Form, Button } from "react-bootstrap";
 import { fbiControllers, randomKey } from "../../fbiAPIEndpoints";
 
 
 export default function CrimesSearchForm(props) {
-
-   console.log("CrimesSearchForm Loading....");
 
     const inputFields = {
         searchType: "",
@@ -28,10 +26,6 @@ export default function CrimesSearchForm(props) {
     },[]);
 
     function handleSearchChange(event) {
-        console.log("target", event.target);
-        console.log("name", event.target.name);
-        console.log("id", event.target.id);
-        console.log("value", event.target.value);
 
 		const searchRequest = {
             searchType: formFields.searchType,
@@ -65,8 +59,8 @@ export default function CrimesSearchForm(props) {
     
     function handleSearchSubmit(event) {
 		event.preventDefault();
-        console.log("Submit", event);
-		const request = {
+
+        const request = {
             searchType: "Crime State",
             requestID: randomKey(16),
 		};                

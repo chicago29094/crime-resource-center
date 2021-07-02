@@ -1,11 +1,7 @@
-import { useState, useEffect } from "react";
-import { Container, Col, Row, Table } from "react-bootstrap";
-import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints";
+import { Table } from "react-bootstrap";
+import { fbiControllers }  from "../../fbiAPIEndpoints";
 
 export default function SearchResultsText(props) {
-
-    console.log('SearchResultsText Rendering', Date.now());
-    
 
     if ( (!props.searchRequest) || (!props.crimeData) ) {
         return (
@@ -77,15 +73,6 @@ export default function SearchResultsText(props) {
             <div className="crime-text">
                 <h4>Crime Statistics for {stateFormatted}</h4>
                 <h5>Offense: {generalOffenseFormatted}  Years: {since} to {until} </h5>
-            
-            { 
-                (() => {
-                console.log(crimeData)
-                console.log(generalOffense)
-                console.log(generalOffenseUnderscore)
-                console.log(crimeData[2])
-                })()
-            } 
 
             <Table striped bordered hover responsive>
                 <thead>
@@ -118,15 +105,6 @@ export default function SearchResultsText(props) {
             <div className="arrest-text">
                 <h4>Arrest Statistics for {stateFormatted}</h4>
                 <h5>Offense: {detailedOffenseFormatted}  Years: {since} to {until} </h5>
-            
-            { 
-                (() => {
-                console.log(crimeData)
-                console.log(detailedOffense)
-                console.log(detailedOffenseUnderscore)
-                console.log(crimeData[2])
-                })()
-            } 
 
             <Table striped bordered hover responsive>
                 <thead>
