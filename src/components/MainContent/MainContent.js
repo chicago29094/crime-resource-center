@@ -71,7 +71,7 @@ export default function MainContent(props) {
 
     return (
 
-        <main>
+        <main> 
             <Route path="/" exact component={Hero} />
             <Route path="/about" exact component={About} />
             <Route path="/contribute" exact component={Contribute} />
