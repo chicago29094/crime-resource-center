@@ -1,7 +1,9 @@
+
 # Online Federal Crime Resource Center
 *This is a SPA React Website that integrates into the FBI's Crime and Arrest Data API controllers.*  
 ___
-![Online Federal Crime Resource Center](https://chicago29094.github.io//)
+![Online Federal Crime Resource Center](https://user-images.githubusercontent.com/84363576/124279572-4abead00-db0d-11eb-8478-bd22109e5f54.png)
+![Online Federal Crime Resource Center](https://user-images.githubusercontent.com/84363576/124279608-54e0ab80-db0d-11eb-95b0-8b88f918f0de.png)
 ___
 
 ### Description
