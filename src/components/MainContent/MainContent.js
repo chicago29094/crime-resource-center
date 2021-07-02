@@ -6,7 +6,7 @@ import Contribute from "../Contribute/Contribute"
 import Hero from "../Hero/Hero"
 import ArrestsSearchForm from "../ArrestsSearchForm/ArrestsSearchForm"
 import CrimesSearchForm from "../CrimesSearchForm/CrimesSearchForm"
-import SearchResults from "../SearchResults/SearchResults"
+import SearchResults from "../SearchResults/SearchResults_backup2"
 import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints"
 
 export default function MainContent(props) {
@@ -78,10 +78,10 @@ export default function MainContent(props) {
             <Route path="/crimes" exact>
                 <Container fluid>
                     <Row className="justify-content-between">
-                        <Col xs="4" className="px-5">
+                        <Col lg="4" md="1" className="px-5">
                             <CrimesSearchForm apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>  
-                        <Col xs="8">
+                        <Col lg="8" md="1" >
                             <SearchResults apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest}  />
                         </Col>
                     </Row>
@@ -91,10 +91,10 @@ export default function MainContent(props) {
             <Route path="/arrests" exact>
                 <Container fluid>
                     <Row>
-                        <Col xs="4" className="px-5">
+                        <Col lg="4" md="1" className="px-5">
                             <ArrestsSearchForm  apiKey={apiKey} states={states} setSearchRequest={setSearchRequest} />
                         </Col>
-                        <Col xs="8">
+                        <Col lg="8" md="1" >
                             <SearchResults  apiKey={apiKey} states={states} searchRequest={searchRequest} setSearchRequest={setSearchRequest} />
                         </Col>
                     </Row>
