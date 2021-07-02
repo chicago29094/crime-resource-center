@@ -52,7 +52,8 @@ export default function SearchResultsChart(props) {
     if ( (!props.searchRequest) || (!props.crimeData) ) {
       return (
           <div>
-              <p>Please use the search form to view statistics.</p>
+              <h2>Search Results</h2>
+              <p>Please use the search form to view crime and arrest statistics.</p>
           </div>
       )
     }
@@ -64,6 +65,7 @@ export default function SearchResultsChart(props) {
     let stateAbbr="";
     let stateFormatted="";
     let detailedOffense="";
+    let detailedOffenseUnderscore="";
     let detailedOffenseFormatted="";
     let generalOffense="";
     let generalOffenseUnderscore="";
@@ -87,6 +89,7 @@ export default function SearchResultsChart(props) {
     }
     if (searchRequest.detailedOffense) {
         detailedOffense = searchRequest.detailedOffense;
+        detailedOffenseUnderscore = detailedOffense.replaceAll('-','_');        
         detailedOffenseFormatted = fbiControllers["arrest-tkm"]["detailedOffense"][detailedOffense];
     }
     if (searchRequest.generalOffense)  {
@@ -150,12 +153,52 @@ export default function SearchResultsChart(props) {
       </div>
       )
   }
+  else if (searchRequest.searchType==="Arrests State") {
 
+    // Prepare chart data and options
+    for (let index=0; index<crimeData.length; index++) {
+
+      chartData.datasets[0].data.push( (crimeData[index][detailedOffenseUnderscore]!==null) ? 
+      crimeData[index][detailedOffenseUnderscore] : 0);
+      chartData.labels.push(crimeData[index].data_year);
+
+      let randomRed=(Math.round(Math.random()*200)+25);
+      let randomRedBorder=randomRed-25;
+      let randomBlue=(Math.round(Math.random()*200)+25);
+      let randomBlueBorder=randomBlue-25;
+      let randomGreen=(Math.round(Math.random()*200)+25);
+      let randomGreenBorder=randomGreen-25;
+
+      let randomBarColor=`rgba(${randomRed}, ${randomBlue}, ${randomGreen}, 0.8)`;
+      let randomBarColorBorder=`rgba(${randomRedBorder}, ${randomBlueBorder}, ${randomGreenBorder}, 0.8)`;
+
+      chartData.datasets[0].backgroundColor.push(randomBarColor);
+      chartData.datasets[0].borderColor.push(randomBarColorBorder);
+    }
+    chartData.datasets[0].label="# of Offenses";
+    chartOptions.plugins.title.text=`Offense: ${detailedOffenseFormatted}  Years: ${since} to ${until} `;
+
+    return (
+      <div className='crime-chart'>
+        <h4>Arrest Statistics for {stateFormatted}</h4>
+        <h5>Offense: {detailedOffenseFormatted}  Years: {since} to {until} </h5>
+
+        <div className='header'>
+            
+        <h1 className='title'>Arrest Statistics for {stateFormatted}</h1>
+      </div>
+
+      <Bar data={chartData} options={chartOptions} />
+
+    </div>
+    )
+}
   else {
 
     return (
           <div className='crime-chart'>
-              <p>Please use the search form to view statistics.</p>
+              <h2>Search Results</h2>
+              <p>Please use the search form to view crime and arrest statistics.</p>
           </div>
       )        
 

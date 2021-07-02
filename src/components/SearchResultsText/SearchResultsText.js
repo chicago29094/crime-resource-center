@@ -10,7 +10,8 @@ export default function SearchResultsText(props) {
     if ( (!props.searchRequest) || (!props.crimeData) ) {
         return (
             <div>
-                <p>Please use the search form to view statistics.</p>
+                <h2>Search Results</h2>
+                <p>Please use the search form to view crime and arrest statistics.</p>
             </div>
         )
     }
@@ -22,6 +23,7 @@ export default function SearchResultsText(props) {
     let stateAbbr="";
     let stateFormatted="";
     let detailedOffense="";
+    let detailedOffenseUnderscore="";
     let detailedOffenseFormatted="";
     let generalOffense="";
     let generalOffenseUnderscore="";
@@ -45,6 +47,7 @@ export default function SearchResultsText(props) {
     }
     if (searchRequest.detailedOffense) {
         detailedOffense = searchRequest.detailedOffense;
+        detailedOffenseUnderscore = detailedOffense.replaceAll('-','_');
         detailedOffenseFormatted = fbiControllers["arrest-tkm"]["detailedOffense"][detailedOffense];
     }
     if (searchRequest.generalOffense)  {
@@ -108,10 +111,53 @@ export default function SearchResultsText(props) {
         )
 
     }
+
+    else if (searchRequest.searchType==="Arrests State") {
+
+        return (
+            <div className="arrest-text">
+                <h4>Arrest Statistics for {stateFormatted}</h4>
+                <h5>Offense: {detailedOffenseFormatted}  Years: {since} to {until} </h5>
+            
+            { 
+                (() => {
+                console.log(crimeData)
+                console.log(detailedOffense)
+                console.log(detailedOffenseUnderscore)
+                console.log(crimeData[2])
+                })()
+            } 
+
+            <Table striped bordered hover responsive>
+                <thead>
+                    <tr>
+                        <th colSpan="2">Crime Statistics for {stateFormatted}</th>                        
+                    </tr>
+                    <tr>
+                        <th>Year</th>
+                        <th>{detailedOffenseFormatted} - Annual Total</th>
+                    </tr>
+                    {crimeData.map( (element, index) => { return (
+                        <tr key={index}>
+                            <td>{crimeData[index].data_year}</td>
+                            <td>{ ( (crimeData[index][detailedOffenseUnderscore]!==undefined) && 
+                                     (crimeData[index][detailedOffenseUnderscore]!==null) ) ?  
+                            parseInt(crimeData[index][detailedOffenseUnderscore]).toLocaleString('en-US', 0) : 'Unavailable' }</td>
+                        </tr>
+                    ) } ) }
+                </thead>
+            </Table>
+
+            </div>
+        )
+
+    }
+
     else {
         return (
             <div className="crime-text">
-                <p>Please use the search form to view statistics.</p>
+                <h2>Search Results</h2>
+                <p>Please use the search form to view crime and arrest statistics.</p>
             </div>
         )        
     }

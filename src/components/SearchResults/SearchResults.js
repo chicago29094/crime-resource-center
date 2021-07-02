@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
-import { Container, Col, Row, Button } from "react-bootstrap";
+import { Container, Col, Row } from "react-bootstrap";
 import { fbiControllers, generateAPIURL }  from "../../fbiAPIEndpoints";
 import SearchResultsText  from '../SearchResultsText/SearchResultsText';
 import SearchResultsChart from '../SearchResultsChart/SearchResultsChart';
-import CRCModal from "../CRCModal/CRCModal";
 
 export default function SearchResults(props) {
 
@@ -16,13 +15,12 @@ export default function SearchResults(props) {
 
     const [crimeData, setCrimeData] = useState([]);
     const [errorState, setErrorState] = useState({state: false, title: '', message: '',});
-    const [modalShow, setModalShow] = useState(false);
     
     // Search Request object properties that may or may not be set
     let stateAbbr="";
     let detailedOffense="";
     let generalOffense="";
-    let offenderClass="";
+    let offenderClass="all";
     let since="";
     let until="";
     let states={};
@@ -46,6 +44,9 @@ export default function SearchResults(props) {
         if (props.searchRequest.searchType==="Crime State") {
             useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];
         }
+        else if (props.searchRequest.searchType==="Arrests State") {
+            useFBIControllerAPI=fbiControllers["arrest-data"]["offenseAPI"];
+        }        
         else {
             useFBIControllerAPI=fbiControllers["summarized-tkm"]["stateAPI"];     
         }
@@ -53,9 +54,9 @@ export default function SearchResults(props) {
 
         console.log("apiURL=", apiURL);
 
-        // if ( (apiURL.indexOf('{')!==-1) || (apiURL.indexOf('}')!==-1) ) {
-        //     return;
-        // }
+        if ( (apiURL.indexOf('{')!==-1) || (apiURL.indexOf('}')!==-1) ) {
+            return;
+        }
 
         try { 
             // fetch
@@ -64,10 +65,6 @@ export default function SearchResults(props) {
             if ( (!response.ok) || (response.status!==200) ) {
                 const message = `An error occurred while retrieving the requested FBI Crime and Arrest statistics.  Please try again or contact the CRC administrator for further assistance.`;
                 throw new Error(message);
-            }
-
-            if (1==1) {
-            throw new Error('An error occurred while retrieving the requested FBI Crime and Arrest statistics.  Please try again or contact the CRC administrator for further assistance.');
             }
 
             const stats = await response.json();
@@ -111,6 +108,15 @@ export default function SearchResults(props) {
                     }
                 }
 
+                // Sort the Records by Year
+                if (props.searchRequest.searchType==="Arrests State") {
+                    localCrimeData.sort( (recA, recB) => {
+                        if (recA['data_year']<recB['data_year']) return -1;
+                        else if (recA['data_year']===recB['data_year']) return 0;
+                        else return 1;
+                    } )
+                }
+
                 setCrimeData( localCrimeData );
 
                 if ( (stats.pagination) && (stats.pagination.page>=0) && (stats.pagination.pages>=1) ) {
@@ -124,7 +130,7 @@ export default function SearchResults(props) {
                     }
                 }
             }
-
+ 
         } catch(error) {
             const errorObj = {
                 state: true,
@@ -135,15 +141,7 @@ export default function SearchResults(props) {
         }
     }
 
-    useEffect( () => {
-        console.log("Here:aaaaaaa");
-        if (errorState.state) {
-            setModalShow(true);
-        }
-        console.log("Here:ccccccc");
-    }, [errorState] );
-   
-
+    
     useEffect( () => {
                 console.log("Here:00001: Before useEffect Fetch Requested");
                 fetchCrimeData([], "", "replace");
@@ -156,19 +154,12 @@ export default function SearchResults(props) {
 
     if ( (props.searchRequest) && (props.searchRequest.outputFormat==='textOutput') ) {
         return (
-            <>
-            <SearchResultsText apiKey={props.apiKey} states={states} searchRequest={props.searchRequest} crimeData={crimeData} />
-            <CRCModal errorState={errorState} show={modalShow} onHide={()=>setModalShow(false)} />             
-            </>
+            <SearchResultsText apiKey={props.apiKey} states={states} searchRequest={props.searchRequest} crimeData={crimeData} errorState={errorState} />
         )
     }
     else if ( (props.searchRequest) && (props.searchRequest.outputFormat==='chartOutput') ) {
         return (
-            <>
-            <SearchResultsChart apiKey={props.apiKey} states={states}  searchRequest={props.searchRequest} crimeData={crimeData} />
-            <CRCModal errorState={errorState} show={modalShow} onHide={()=>setModalShow(false)} />             
-            </>
-
+            <SearchResultsChart apiKey={props.apiKey} states={states}  searchRequest={props.searchRequest} crimeData={crimeData} errorState={errorState}  />
         )
     }
     else 
@@ -177,7 +168,6 @@ export default function SearchResults(props) {
             <div>
                 <h2>Search Results</h2>
                 <p>Please click on the <em>Crime</em> or <em>Arrests</em> navigation button and use the corresponding search form to initiate a search of the FBI''s UCR, SRS, and NIBRS annual crime and arrest data.</p>
-                <CRCModal errorState={errorState} show={modalShow} onHide={()=>setModalShow(false)} />             
             </div>
         )
     }
