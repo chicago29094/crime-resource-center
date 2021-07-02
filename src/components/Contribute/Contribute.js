@@ -4,12 +4,15 @@ export default function Contribute(props) {
 
     return (
         <Container fluid>
-        <Col>
-            <h2>Contribute</h2>
+       
+        <Col xs={9} className="contribute-page">
+                <h2>Contribute to the OFCRC's Ongoing Success</h2>
 
-            <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Maecenas porttitor congue massa. Fusce posuere, magna sed pulvinar ultricies, purus lectus malesuada libero, sit amet commodo magna eros quis urna. Nunc viverra imperdiet enim. Fusce est. Vivamus a tellus. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Proin pharetra nonummy pede. Mauris et orci. Aenean nec lorem.</p>
+<p>The Online Federal Crime Resource Center welcomes contributions, suggestions, or involvement in our open source project to make the FBI's crime and arrest data more accessible on the Internet.</p>
 
-<p>In porttitor. Donec laoreet nonummy augue. Suspendisse dui purus, scelerisque at, vulputate vitae, pretium mattis, nunc. Mauris eget neque at sem venenatis eleifend. Ut nonummy. Fusce aliquet pede non pede. Suspendisse dapibus lorem pellentesque magna. Integer nulla. Donec blandit feugiat ligula. Donec hendrerit, felis et imperdiet euismod, purus ipsum pretium metus, in lacinia nulla nisl eget sapien.</p>
+<p>Please use the contact information provided below to get in contact with us.  Feel free to join our mailing list to keep in touch with the latest OFCRC updates and developments.</p>
+
+<p>Feel free to review our software and data at our public GitHub site.</p>
 
         </Col>
     </Container>

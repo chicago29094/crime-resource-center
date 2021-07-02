@@ -76,3 +76,30 @@ img.header-logo {
     font-size: 0.95rem;
     color: #c0c0c0;
 }
+
+
+.about-page, .contribute-page {
+    justify-content: center;
+    margin: 40px auto 80px auto;
+    font-size: 1.1rem;
+    line-height: 120%;
+}
+
+.about-page h2, .contribute-page h2{
+    margin: 0px 0px 30px 0px;
+}
+
+
+footer {
+    font-size: 0.9rem;
+    margin: 60px 0px 20px 0px;
+}
+
+footer p {
+    font-size: 0.9rem;
+    margin: 2px;
+}
+
+.crc-footer li {
+    margin-left: -20px;
+}
