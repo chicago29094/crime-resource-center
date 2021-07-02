@@ -1,71 +1,58 @@
-# Getting Started with Create React App
+# Online Federal Crime Resource Center
+*This is a SPA React Website that integrates into the FBI's Crime and Arrest Data API controllers.*  
+___
+![Online Federal Crime Resource Center](https://chicago29094.github.io//)
+___
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### Description
 
-## Available Scripts
+The Online Federal Crime Resource Center ("OFCRC") provides two search forms for exploring and analyzing crime and arrest statistics from the FBI’s Uniform Crime Reporting (UCR) datasets.  These datasets are comprised of data that spans 1930 through 2019 and reportedly hundreds of gigabytes.  The focus of OFCRC is on data from 1990 through 2019.  The interfaces provided allow the user to search crime statistics by state.  The user is presented with search form options on the crime or arrest data they are interested in viewing over a particular year-based date range.  The user is provided with options to either view the data in a text-based table format or in a graphical chart format.
 
-In the project directory, you can run:
+**Link to GitHub Repository site:** https://github.com/chicago29094/crime-resource-center
+**Link to Deployed public Website:** https://chicago29094.github.io/
 
-### `yarn start`
+### Game summary:
+You are the band member for the rock band Bad Tendencies. Your job is to get the band members on stage and to keep them out of trouble. If you get close to a band member they will follow you to the stage, unless they are distracted or under the influence. You can collect money as you move along, otherwise the band members will grab it and likely waste it to support their Rock-n-Roll lifestyle. Use the keyboard arrow keys to move around. Good Luck!!!.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+The game ends when one of the following conditions is met:
+**Win Condition:** The player must complete all five levels of the game by bring band members to the stage entrance and keeping the band members alive.
+**Lose Conditions:** The player will lose the game if there are no more band members left alive on a level or if the player's own health reaches zero.
+**Multiple Game Rounds** As the player progress between levels, they are presented with a new game playfield and increasing challenges.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Technologies used:
+- HTML5
+- CSS: Flexbox, Nested Display Components, Responsive Design
+- JavaScript: loops, aync/await JSON data fetching through structured API calls, math methods/randomization, array methods, complex object data structures, arrow functions, 
+- SPA Web development, React, Bootstrap, React-Bootstrap, Chart.js, Controlled Components and Controlled Forms/User Input, useState, useEffect, props, React hooks
+___
+## Installation Requirements
+- No additional libraries or special add-ons needed beyond what is included in the repository
+- The site uses, yarn, Bootstrap, React-Bootstrap, React, Chart.js, React-Chartjs2.
+- Download the repo from https://github.com/chicago29094/crime-resource-center
+- To deploy locally on your own computer, utilize yarn start to  start the Website's execution.
 
-### `yarn test`
+## Contribution Instructions
+- Contributions, suggestions, feature requests, or bug reports can be e-mailed to ofcrc@uswide.net.
+- Input cn also be provided by contact the developer Harry Anastopoulos via the public GitHub repository for the OFCRC system.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Lessons Learned/Ongoing Issues:
+### Lessons Learned
+- React-Bootstrap is not well documented and their are many features that are either missing or are just not documented by the developers.
+- The control and resetting of complex Web forms is not well documented for Bootstrap, React-Bootstrap, and React. It is apparent from Web comments that many developers are not well verses on how these technologies work.
+- Too many online individuals suggest downloading third-part apps and modules to solve common React and Bootstrap limitations and problems.
+- The FBI APIs are not 100% accurately documented/
+  
+### Ongoing Issues
+- A more robust form validation system is needed.
+- More robust error and exception handling need to be put in place.
+- It is not clear how to reset both the value of form drop-down components and their visual display on the browser without relying on DOM events.  It is not well documented on how to accomplish this using out-of-the-box react.
+- More time needs to be spent on developing a robust set of resource links for users.
+- A framework is in place programmatically to access additional FBI data controllers for crimes and arrests.  Future enhancements can include demographic searches, additional offender reports, and victim information.
+- Correlating the various data sets programmatically, via compound queries, may yielf more inetersting insights into the crime data.
+- Some mislabelled FBI fields are not yielding display results.  THis can be an indication of mislabelled fields or missing or unreported data.
 
-### `yarn build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `yarn build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-# crime-resource-center
+  
